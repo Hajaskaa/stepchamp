@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>StepChamp</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0f;
+    --surface: #13131a;
+    --surface2: #1c1c26;
+    --border: #2a2a38;
+    --accent: #e8ff47;
+    --accent2: #ff6b35;
+    --accent3: #47b8ff;
+    --text: #f0f0f0;
+    --muted: #6b6b80;
+    --danger: #ff4757;
+    --nav-h: 68px;
+  }
+
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    overflow: hidden;
+  }
+
+  .app {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    max-width: 430px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  /* SCROLLABLE CONTENT */
+  .pages {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .page {
+    position: absolute;
+    inset: 0;
+    overflow-y: auto;
+    padding: 24px 20px calc(var(--nav-h) + 16px);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(12px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    scrollbar-width: none;
+  }
+  .page::-webkit-scrollbar { display: none; }
+  .page.active {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateY(0);
+  }
+
+  /* NAV */
+  .nav {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 430px;
+    height: var(--nav-h);
+    background: rgba(19,19,26,0.92);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: stretch;
+    z-index: 100;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .nav-btn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--muted);
+    transition: color 0.2s;
+    -webkit-tap-highlight-color: transparent;
+    padding: 8px 0;
+  }
+  .nav-btn.active { color: var(--accent); }
+  .nav-btn svg { width: 22px; height: 22px; }
+  .nav-btn span { font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+
+  /* TYPOGRAPHY */
+  .display { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.02em; }
+
+  h1.page-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 38px;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    margin-bottom: 24px;
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 14px;
+  }
+
+  .card-sm {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+  }
+
+  /* PROFILE PAGE */
+  .profile-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    color: #000;
+    flex-shrink: 0;
+  }
+
+  .profile-info h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 0.04em;
+  }
+
+  .profile-info p {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+
+  .stat-box {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 10px;
+    text-align: center;
+  }
+
+  .stat-box .val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    color: var(--accent);
+    letter-spacing: 0.02em;
+    line-height: 1;
+  }
+
+  .stat-box .lbl {
+    font-size: 10px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 4px;
+  }
+
+  .section-title {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+
+  /* LOG ENTRIES */
+  .log-entry {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .log-entry:last-child { border-bottom: none; }
+
+  .log-date { font-size: 13px; color: var(--muted); }
+  .log-day { font-size: 15px; font-weight: 500; }
+
+  .log-steps {
+    text-align: right;
+  }
+  .log-steps .num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.02em;
+    color: var(--accent);
+  }
+  .log-steps .unit { font-size: 11px; color: var(--muted); }
+
+  .bar-wrap {
+    height: 4px;
+    background: var(--surface2);
+    border-radius: 2px;
+    margin-top: 6px;
+    width: 80px;
+  }
+  .bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    background: var(--accent);
+  }
+
+  /* TEAMS PAGE */
+  .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.18s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #000;
+  }
+  .btn-primary:active { transform: scale(0.97); }
+
+  .btn-outline {
+    background: transparent;
+    border: 1.5px solid var(--border);
+    color: var(--text);
+  }
+  .btn-outline:active { transform: scale(0.97); background: var(--surface2); }
+
+  .btn-disabled {
+    background: var(--surface2);
+    color: var(--muted);
+    cursor: not-allowed;
+    border: 1.5px solid var(--border);
+  }
+
+  .team-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .team-card:active { background: var(--surface2); }
+  .team-card.joined { border-color: var(--accent); }
+
+  .team-dot {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .team-info { flex: 1; }
+  .team-name { font-weight: 600; font-size: 15px; }
+  .team-meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  .joined-badge {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    background: rgba(232,255,71,0.12);
+    padding: 4px 8px;
+    border-radius: 6px;
+  }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(4px);
+    z-index: 200;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s;
+    max-width: 430px;
+    margin: 0 auto;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .modal-overlay.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 24px 24px 0 0;
+    padding: 28px 24px 40px;
+    width: 100%;
+    transform: translateY(40px);
+    transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  .modal-overlay.open .modal { transform: translateY(0); }
+
+  .modal-handle {
+    width: 36px;
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    margin: 0 auto 24px;
+  }
+
+  .modal h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 0.04em;
+    margin-bottom: 20px;
+  }
+
+  .input-group { margin-bottom: 14px; }
+  .input-group label {
+    display: block;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+
+  .input-group input {
+    width: 100%;
+    background: var(--surface2);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 15px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .input-group input:focus { border-color: var(--accent); }
+
+  /* CHAMPIONSHIP PAGE */
+  .champ-header {
+    margin-bottom: 24px;
+  }
+
+  .champ-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(232,255,71,0.1);
+    border: 1px solid rgba(232,255,71,0.3);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+
+  .champ-badge .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 1.5s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .progress-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 12px;
+  }
+
+  .progress-label .goal-text {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .progress-label .pct {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    color: var(--accent);
+    letter-spacing: 0.02em;
+    line-height: 1;
+  }
+
+  .progress-track {
+    height: 8px;
+    background: var(--surface2);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+
+  .progress-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transition: width 1s cubic-bezier(0.34,1.56,0.64,1);
+  }
+
+  .progress-nums {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .progress-nums strong { color: var(--text); }
+
+  /* LEADERBOARD */
+  .tabs {
+    display: flex;
+    background: var(--surface2);
+    border-radius: 10px;
+    padding: 4px;
+    margin-bottom: 16px;
+  }
+
+  .tab {
+    flex: 1;
+    padding: 8px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 7px;
+    cursor: pointer;
+    color: var(--muted);
+    transition: all 0.2s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .tab.active {
+    background: var(--surface);
+    color: var(--text);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+
+  .lb-entry {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .lb-entry:last-child { border-bottom: none; }
+
+  .lb-rank {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.02em;
+    width: 28px;
+    text-align: center;
+    color: var(--muted);
+    flex-shrink: 0;
+  }
+
+  .lb-rank.gold { color: #ffd700; }
+  .lb-rank.silver { color: #c0c0c0; }
+  .lb-rank.bronze { color: #cd7f32; }
+
+  .lb-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+
+  .lb-team-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .lb-info { flex: 1; min-width: 0; }
+  .lb-name { font-weight: 500; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .lb-sub { font-size: 12px; color: var(--muted); margin-top: 1px; }
+
+  .lb-steps {
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .lb-steps .num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 0.02em;
+    line-height: 1;
+  }
+  .lb-steps .unit { font-size: 10px; color: var(--muted); }
+
+  .me-highlight {
+    background: rgba(232,255,71,0.05);
+    border-radius: 10px;
+    padding: 2px 8px;
+    margin: 0 -8px;
+  }
+
+  /* EMPTY */
+  .empty {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  /* UTILS */
+  .mb-16 { margin-bottom: 16px; }
+  .mb-24 { margin-bottom: 24px; }
+  .gap-10 { gap: 10px; }
+
+  .champ-coming-soon {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="pages">
+
+    <!-- PROFILE PAGE -->
+    <div class="page active" id="page-profile">
+      <div class="profile-header">
+        <div class="avatar" id="avatarEl">JD</div>
+        <div class="profile-info">
+          <h2 id="profileName">John Doe</h2>
+          <p>Member since May 2026</p>
+        </div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-box">
+          <div class="val" id="statToday">—</div>
+          <div class="lbl">Today</div>
+        </div>
+        <div class="stat-box">
+          <div class="val" id="statWeek">—</div>
+          <div class="lbl">This Week</div>
+        </div>
+        <div class="stat-box">
+          <div class="val" id="statStreak">7</div>
+          <div class="lbl">Day Streak</div>
+        </div>
+      </div>
+
+      <p class="section-title">Daily Log</p>
+      <div class="card" style="padding: 4px 20px;" id="logList"></div>
+    </div>
+
+    <!-- TEAMS PAGE -->
+    <div class="page" id="page-teams">
+      <h1 class="page-title">Teams</h1>
+
+      <div class="mb-24">
+        <button class="btn btn-primary" onclick="openModal('createTeamModal')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Create New Team
+        </button>
+      </div>
+
+      <p class="section-title">Available Teams</p>
+      <div id="teamsList"></div>
+    </div>
+
+    <!-- CHAMPIONSHIP PAGE -->
+    <div class="page" id="page-champ">
+      <div class="champ-header">
+        <div class="champ-badge"><span class="dot"></span> Live</div>
+        <h1 class="page-title" style="margin-bottom:0">Spring<br>Championship</h1>
+      </div>
+
+      <div class="progress-section">
+        <div class="progress-label">
+          <div>
+            <div style="font-size:12px;color:var(--muted);margin-bottom:2px">Combined Goal</div>
+            <div style="font-weight:600;font-size:15px">2,000,000 steps</div>
+          </div>
+          <div class="pct" id="champPct">0%</div>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="champBar" style="width:0%"></div>
+        </div>
+        <div class="progress-nums">
+          <span><strong id="champTotal">0</strong> steps logged</span>
+          <span id="champRemain">2,000,000 remaining</span>
+        </div>
+      </div>
+
+      <div class="tabs mb-16">
+        <div class="tab active" onclick="switchLbTab('teams', this)">Teams</div>
+        <div class="tab" onclick="switchLbTab('solo', this)">Solo</div>
+      </div>
+
+      <div id="lb-teams" class="card" style="padding: 4px 20px;"></div>
+      <div id="lb-solo" class="card" style="padding: 4px 20px; display:none;"></div>
+
+      <div style="margin-top: 20px;">
+        <button class="btn btn-disabled" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="18" height="18"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          New Championship
+        </button>
+        <p style="text-align:center;font-size:11px;color:var(--muted);margin-top:8px">Available when current championship ends</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <nav class="nav">
+    <button class="nav-btn active" onclick="switchPage('profile', this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+      </svg>
+      <span>Profile</span>
+    </button>
+    <button class="nav-btn" onclick="switchPage('teams', this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+      </svg>
+      <span>Teams</span>
+    </button>
+    <button class="nav-btn" onclick="switchPage('champ', this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M8 21h8m-4-4v4M7 4H4l1 7h14l1-7h-3"/><path d="M7 4c0 5 2 8 5 8s5-3 5-8"/>
+      </svg>
+      <span>Championship</span>
+    </button>
+  </nav>
+</div>
+
+<!-- CREATE TEAM MODAL -->
+<div class="modal-overlay" id="createTeamModal" onclick="handleOverlayClick(event, 'createTeamModal')">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <h3>Create Team</h3>
+    <div class="input-group">
+      <label>Team Name</label>
+      <input type="text" id="newTeamName" placeholder="e.g. The Rockets" />
+    </div>
+    <div class="input-group" style="margin-bottom:20px">
+      <label>Team Password</label>
+      <input type="text" id="newTeamPass" placeholder="Share this with your team" />
+    </div>
+    <button class="btn btn-primary" onclick="createTeam()">Create Team</button>
+    <button class="btn btn-outline" style="margin-top:10px" onclick="closeModal('createTeamModal')">Cancel</button>
+  </div>
+</div>
+
+<!-- JOIN TEAM MODAL -->
+<div class="modal-overlay" id="joinTeamModal" onclick="handleOverlayClick(event, 'joinTeamModal')">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <h3 id="joinTeamTitle">Join Team</h3>
+    <div class="input-group" style="margin-bottom:20px">
+      <label>Team Password</label>
+      <input type="text" id="joinTeamPass" placeholder="Enter team password" />
+    </div>
+    <button class="btn btn-primary" onclick="joinTeam()">Join Team</button>
+    <button class="btn btn-outline" style="margin-top:10px" onclick="closeModal('joinTeamModal')">Cancel</button>
+  </div>
+</div>
+
+<script>
+// ── STATE ──────────────────────────────────────────────
+const state = {
+  user: { name: "John Doe", id: "me" },
+  joinedTeam: null,
+  joiningTeamId: null,
+  teams: [
+    { id: "t1", name: "The Rockets", emoji: "🚀", members: 8, password: "rockets123" },
+    { id: "t2", name: "Iron Walkers", emoji: "⚡", members: 12, password: "iron2026" },
+    { id: "t3", name: "Sunrise Squad", emoji: "🌅", members: 6, password: "sunrise" },
+    { id: "t4", name: "Night Owls", emoji: "🦉", members: 9, password: "owls" },
+  ],
+  logs: [
+    { date: "2026-05-11", steps: 9241 },
+    { date: "2026-05-10", steps: 11823 },
+    { date: "2026-05-09", steps: 7540 },
+    { date: "2026-05-08", steps: 13002 },
+    { date: "2026-05-07", steps: 6318 },
+    { date: "2026-05-06", steps: 10450 },
+    { date: "2026-05-05", steps: 8877 },
+  ],
+  championship: {
+    name: "Spring Championship",
+    goal: 2000000,
+    teams: [
+      { id: "ct1", name: "The Rockets", emoji: "🚀", steps: 187432 },
+      { id: "ct2", name: "Iron Walkers", emoji: "⚡", steps: 243810 },
+      { id: "ct3", name: "Sunrise Squad", emoji: "🌅", steps: 156290 },
+      { id: "ct4", name: "Night Owls", emoji: "🦉", steps: 201543 },
+      { id: "ct5", name: "Storm Chasers", emoji: "🌩️", steps: 178900 },
+      { id: "ct6", name: "Peak Climbers", emoji: "🏔️", steps: 134670 },
+    ],
+    solo: [
+      { id: "s1", name: "Maria G.", initials: "MG", color: "#ff6b35", team: "Iron Walkers", steps: 58310 },
+      { id: "s2", name: "Kwame A.", initials: "KA", color: "#47b8ff", team: "Iron Walkers", steps: 52100 },
+      { id: "s3", name: "John Doe", initials: "JD", color: "#e8ff47", team: "The Rockets", steps: 47820, isMe: true },
+      { id: "s4", name: "Priya S.", initials: "PS", color: "#c084fc", team: "Night Owls", steps: 44230 },
+      { id: "s5", name: "Luca M.", initials: "LM", color: "#fb923c", team: "Sunrise Squad", steps: 41590 },
+      { id: "s6", name: "Anya K.", initials: "AK", color: "#34d399", team: "Storm Chasers", steps: 39800 },
+      { id: "s7", name: "Ben T.", initials: "BT", color: "#f472b6", team: "Peak Climbers", steps: 37200 },
+      { id: "s8", name: "Zoe L.", initials: "ZL", color: "#60a5fa", team: "Night Owls", steps: 35610 },
+    ]
+  }
+};
+
+// ── NAVIGATION ─────────────────────────────────────────
+function switchPage(name, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ── MODALS ─────────────────────────────────────────────
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+function handleOverlayClick(e, id) {
+  if (e.target === e.currentTarget) closeModal(id);
+}
+
+// ── LEADERBOARD TABS ────────────────────────────────────
+function switchLbTab(tab, el) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('lb-teams').style.display = tab === 'teams' ? '' : 'none';
+  document.getElementById('lb-solo').style.display = tab === 'solo' ? '' : 'none';
+}
+
+// ── FORMAT ─────────────────────────────────────────────
+function fmt(n) {
+  if (n >= 1000) return (n/1000).toFixed(1) + 'k';
+  return n.toString();
+}
+function fmtFull(n) {
+  return n.toLocaleString();
+}
+
+// ── RENDER PROFILE ─────────────────────────────────────
+function renderProfile() {
+  const name = state.user.name;
+  const initials = name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+  document.getElementById('avatarEl').textContent = initials;
+  document.getElementById('profileName').textContent = name;
+
+  const today = state.logs[0]?.steps ?? 0;
+  const week = state.logs.reduce((a,b) => a + b.steps, 0);
+  document.getElementById('statToday').textContent = fmt(today);
+  document.getElementById('statWeek').textContent = fmt(week);
+
+  const max = Math.max(...state.logs.map(l=>l.steps));
+  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const list = document.getElementById('logList');
+  list.innerHTML = state.logs.map(l => {
+    const d = new Date(l.date + 'T00:00:00');
+    const dayName = days[d.getDay()];
+    const dateStr = d.toLocaleDateString('en-US', { month:'short', day:'numeric' });
+    const pct = Math.round((l.steps / max) * 100);
+    return `
+      <div class="log-entry">
+        <div>
+          <div class="log-day">${dayName}</div>
+          <div class="log-date">${dateStr}</div>
+        </div>
+        <div class="log-steps">
+          <div class="num">${fmtFull(l.steps)}</div>
+          <div class="unit">steps</div>
+          <div class="bar-wrap"><div class="bar-fill" style="width:${pct}%"></div></div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+// ── RENDER TEAMS ────────────────────────────────────────
+function renderTeams() {
+  const list = document.getElementById('teamsList');
+  list.innerHTML = state.teams.map(t => `
+    <div class="team-card ${state.joinedTeam === t.id ? 'joined' : ''}" onclick="handleTeamClick('${t.id}')">
+      <div class="team-dot" style="background:var(--surface2)">${t.emoji}</div>
+      <div class="team-info">
+        <div class="team-name">${t.name}</div>
+        <div class="team-meta">${t.members} members</div>
+      </div>
+      ${state.joinedTeam === t.id ? '<span class="joined-badge">Joined</span>' : ''}
+    </div>`).join('');
+}
+
+function handleTeamClick(id) {
+  if (state.joinedTeam === id) return;
+  state.joiningTeamId = id;
+  const team = state.teams.find(t => t.id === id);
+  document.getElementById('joinTeamTitle').textContent = `Join ${team.name}`;
+  document.getElementById('joinTeamPass').value = '';
+  openModal('joinTeamModal');
+}
+
+function joinTeam() {
+  const pass = document.getElementById('joinTeamPass').value.trim();
+  const team = state.teams.find(t => t.id === state.joiningTeamId);
+  if (!team) return;
+  if (pass !== team.password) {
+    document.getElementById('joinTeamPass').style.borderColor = 'var(--danger)';
+    setTimeout(() => document.getElementById('joinTeamPass').style.borderColor = '', 1200);
+    return;
+  }
+  state.joinedTeam = team.id;
+  closeModal('joinTeamModal');
+  renderTeams();
+}
+
+function createTeam() {
+  const name = document.getElementById('newTeamName').value.trim();
+  const pass = document.getElementById('newTeamPass').value.trim();
+  if (!name || !pass) return;
+  const emojis = ['🔥','💫','⚡','🎯','🦁','🌊','🏹','🛸'];
+  const newTeam = {
+    id: 't' + Date.now(),
+    name,
+    emoji: emojis[Math.floor(Math.random() * emojis.length)],
+    members: 1,
+    password: pass
+  };
+  state.teams.unshift(newTeam);
+  state.joinedTeam = newTeam.id;
+  document.getElementById('newTeamName').value = '';
+  document.getElementById('newTeamPass').value = '';
+  closeModal('createTeamModal');
+  renderTeams();
+}
+
+// ── RENDER CHAMPIONSHIP ────────────────────────────────
+function renderChampionship() {
+  const ch = state.championship;
+  const total = ch.teams.reduce((a,b) => a + b.steps, 0);
+  const pct = Math.min(100, Math.round((total / ch.goal) * 100));
+  const remain = Math.max(0, ch.goal - total);
+
+  document.getElementById('champPct').textContent = pct + '%';
+  document.getElementById('champTotal').textContent = fmtFull(total);
+  document.getElementById('champRemain').textContent = fmtFull(remain) + ' remaining';
+  setTimeout(() => {
+    document.getElementById('champBar').style.width = pct + '%';
+  }, 100);
+
+  const rankClass = i => i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : '';
+  const sorted_teams = [...ch.teams].sort((a,b) => b.steps - a.steps);
+  document.getElementById('lb-teams').innerHTML = sorted_teams.map((t,i) => `
+    <div class="lb-entry">
+      <div class="lb-rank ${rankClass(i)}">${i+1}</div>
+      <div class="lb-team-icon" style="background:var(--surface2)">${t.emoji}</div>
+      <div class="lb-info">
+        <div class="lb-name">${t.name}</div>
+        <div class="lb-sub">${t.members || ''}</div>
+      </div>
+      <div class="lb-steps">
+        <div class="num">${fmtFull(t.steps)}</div>
+        <div class="unit">steps</div>
+      </div>
+    </div>`).join('');
+
+  const sorted_solo = [...ch.solo].sort((a,b) => b.steps - a.steps);
+  document.getElementById('lb-solo').innerHTML = sorted_solo.map((s,i) => `
+    <div class="lb-entry ${s.isMe ? 'me-highlight' : ''}">
+      <div class="lb-rank ${rankClass(i)}">${i+1}</div>
+      <div class="lb-avatar" style="background:${s.color}22;color:${s.color}">${s.initials}</div>
+      <div class="lb-info">
+        <div class="lb-name">${s.name}${s.isMe ? ' <span style="color:var(--accent);font-size:11px">YOU</span>' : ''}</div>
+        <div class="lb-sub">${s.team}</div>
+      </div>
+      <div class="lb-steps">
+        <div class="num">${fmtFull(s.steps)}</div>
+        <div class="unit">steps</div>
+      </div>
+    </div>`).join('');
+}
+
+// ── INIT ────────────────────────────────────────────────
+renderProfile();
+renderTeams();
+renderChampionship();
+</script>
+</body>
+</html>
