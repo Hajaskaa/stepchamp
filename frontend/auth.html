@@ -638,6 +638,11 @@ const supabase = createClient(
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhpYmp6aHhhZXJldHFvb2lwZWx2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4NzE4MDgsImV4cCI6MjA5NDQ0NzgwOH0.xj2CkqwbbwdzWgS-xPtqDSssiZXPbc8J1s8PR5yWKNM'
 )
 
+// Redirect to app if already logged in (also handles email verification link redirects)
+supabase.auth.getSession().then(({ data: { session } }) => {
+  if (session?.user?.email_confirmed_at) window.location.href = 'index.html'
+})
+
 // ── NAVIGATION ─────────────────────────────────────────
 let currentScreen = 'login';
 
@@ -736,7 +741,7 @@ async function handleLogin() {
       return
     }
     showToast('✓ Signed in successfully', 'success');
-    setTimeout(() => { window.location.href = 'stepchamp.html' }, 1000);
+    setTimeout(() => { window.location.href = 'index.html' }, 1000);
 
   } catch (err) {
     showToast(err.message || 'Sign in failed', 'error');

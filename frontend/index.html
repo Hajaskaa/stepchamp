@@ -21,6 +21,7 @@
     --text: #f0f0f0;
     --muted: #6b6b80;
     --danger: #ff4757;
+    --success: #2ecc71;
     --nav-h: 68px;
   }
 
@@ -595,6 +596,135 @@
     opacity: 0.4;
     pointer-events: none;
   }
+
+  .toast {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-80px);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 18px;
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 999;
+    transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    max-width: calc(430px - 40px);
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+  .toast.error { border-color: var(--danger); color: var(--danger); }
+  .toast.success { border-color: var(--success); color: var(--success); }
+
+  .signout-btn {
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    padding: 8px;
+    margin-left: auto;
+    -webkit-tap-highlight-color: transparent;
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+  }
+  .signout-btn:active { background: var(--surface2); }
+
+  .log-entry { cursor: pointer; border-radius: 8px; margin: 0 -8px; padding-left: 8px; padding-right: 8px; transition: background 0.15s; }
+  .log-entry:active { background: var(--surface2); }
+  .log-entry-hint { font-size: 10px; color: var(--border); margin-top: 2px; }
+
+  .your-team-card {
+    background: rgba(232,255,71,0.06);
+    border: 1.5px solid rgba(232,255,71,0.3);
+    border-radius: 14px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 10px;
+  }
+  .your-team-card .team-info { flex: 1; }
+  .leave-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .leave-btn:active { background: var(--surface2); }
+
+  .hist-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 18px;
+    margin-bottom: 10px;
+  }
+  .hist-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 0.04em;
+    margin-bottom: 2px;
+  }
+  .hist-date { font-size: 11px; color: var(--muted); margin-bottom: 12px; }
+  .hist-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .hist-stat {
+    background: var(--surface2);
+    border-radius: 10px;
+    padding: 10px 12px;
+  }
+  .hist-stat .val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .hist-stat .lbl { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 3px; }
+
+  .admin-stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+  .admin-stat-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px;
+  }
+  .admin-stat-box .val { font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: var(--accent); line-height: 1; }
+  .admin-stat-box .lbl { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+
+  .admin-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .admin-table th { text-align: left; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); padding: 0 0 8px; font-weight: 600; }
+  .admin-table td { padding: 10px 0; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  .admin-table tr:last-child td { border-bottom: none; }
+  .admin-table td:last-child { text-align: right; font-family: 'Bebas Neue', sans-serif; font-size: 18px; color: var(--accent); }
+
+  .champ-mgmt-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 14px;
+  }
+  .champ-mgmt-card h4 { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 0.04em; margin-bottom: 4px; }
+  .champ-mgmt-card p { font-size: 13px; color: var(--muted); margin-bottom: 14px; }
+
+  .btn-danger { background: rgba(255,71,87,0.12); color: var(--danger); border: 1px solid rgba(255,71,87,0.3); }
+  .btn-danger:active { background: rgba(255,71,87,0.2); }
+
+  .activity-row { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--border); }
+  .activity-row:last-child { border-bottom: none; }
+  .activity-name { font-weight: 500; font-size: 13px; flex: 1; }
+  .activity-meta { font-size: 12px; color: var(--muted); }
+  .activity-steps { font-family: 'Bebas Neue', sans-serif; font-size: 18px; color: var(--accent); }
 </style>
 </head>
 <body>
@@ -607,8 +737,11 @@
         <div class="avatar" id="avatarEl">JD</div>
         <div class="profile-info">
           <h2 id="profileName">John Doe</h2>
-          <p>Member since May 2026</p>
+          <p id="memberSince">Member since May 2026</p>
         </div>
+        <button class="signout-btn" onclick="signOut()" title="Sign out">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        </button>
       </div>
 
       <div class="stats-row">
@@ -626,13 +759,28 @@
         </div>
       </div>
 
-      <p class="section-title">Daily Log</p>
+      <button class="btn btn-outline mb-24" onclick="openLogSteps()" style="gap:8px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Log Steps
+      </button>
+
+      <p class="section-title">Daily Log — Last 30 Days</p>
       <div class="card" style="padding: 4px 20px;" id="logList"></div>
+
+      <div id="champHistorySection" style="margin-top:28px; display:none">
+        <p class="section-title">Championship History</p>
+        <div id="champHistoryList"></div>
+      </div>
     </div>
 
     <!-- TEAMS PAGE -->
     <div class="page" id="page-teams">
       <h1 class="page-title">Teams</h1>
+
+      <div id="yourTeamSection" style="display:none; margin-bottom:24px">
+        <p class="section-title">Your Team</p>
+        <div id="yourTeamCard"></div>
+      </div>
 
       <div class="mb-24">
         <button class="btn btn-primary" onclick="openModal('createTeamModal')">
@@ -641,22 +789,44 @@
         </button>
       </div>
 
-      <p class="section-title">Available Teams</p>
+      <p class="section-title">All Teams</p>
       <div id="teamsList"></div>
+    </div>
+
+    <!-- ADMIN PAGE -->
+    <div class="page" id="page-admin">
+      <h1 class="page-title">Admin</h1>
+
+      <p class="section-title">Championship</p>
+      <div id="adminChampSection"></div>
+
+      <p class="section-title" style="margin-top:28px">Statistics</p>
+      <div class="admin-stat-grid" id="adminStatGrid"></div>
+
+      <p class="section-title">Teams Breakdown</p>
+      <div class="card" style="padding:16px 20px; margin-bottom:14px">
+        <table class="admin-table" id="adminTeamsTable">
+          <thead><tr><th>Team</th><th>Members</th><th>Champ Steps</th></tr></thead>
+          <tbody id="adminTeamsBody"></tbody>
+        </table>
+      </div>
+
+      <p class="section-title">Recent Activity</p>
+      <div class="card" style="padding:4px 20px" id="adminActivityList"></div>
     </div>
 
     <!-- CHAMPIONSHIP PAGE -->
     <div class="page" id="page-champ">
       <div class="champ-header">
         <div class="champ-badge"><span class="dot"></span> Live</div>
-        <h1 class="page-title" style="margin-bottom:0">Spring<br>Championship</h1>
+        <h1 class="page-title" id="champTitle" style="margin-bottom:0">Spring<br>Championship</h1>
       </div>
 
       <div class="progress-section">
         <div class="progress-label">
           <div>
             <div style="font-size:12px;color:var(--muted);margin-bottom:2px">Combined Goal</div>
-            <div style="font-weight:600;font-size:15px">2,000,000 steps</div>
+            <div style="font-weight:600;font-size:15px" id="champGoal">2,000,000 steps</div>
           </div>
           <div class="pct" id="champPct">0%</div>
         </div>
@@ -708,6 +878,12 @@
       </svg>
       <span>Championship</span>
     </button>
+    <button class="nav-btn" id="nav-admin" style="display:none" onclick="switchPage('admin', this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/>
+      </svg>
+      <span>Admin</span>
+    </button>
   </nav>
 </div>
 
@@ -743,229 +919,656 @@
   </div>
 </div>
 
-<script>
-// ── STATE ──────────────────────────────────────────────
+<!-- EDIT LOG MODAL -->
+<div class="modal-overlay" id="editLogModal" onclick="handleOverlayClick(event, 'editLogModal')">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <h3 id="editLogTitle">Edit Steps</h3>
+    <div class="input-group" style="margin-bottom:20px">
+      <label>Steps</label>
+      <input type="number" id="editLogCount" placeholder="e.g. 8500" inputmode="numeric" min="0" />
+    </div>
+    <button class="btn btn-primary" id="editLogSubmit" onclick="submitEditLog()">Save</button>
+    <button class="btn btn-outline" style="margin-top:10px; color:var(--danger); border-color:rgba(255,71,87,0.3)" onclick="deleteLogEntry()">Delete Entry</button>
+    <button class="btn btn-outline" style="margin-top:10px" onclick="closeModal('editLogModal')">Cancel</button>
+  </div>
+</div>
+
+<!-- LOG STEPS MODAL -->
+<div class="modal-overlay" id="logStepsModal" onclick="handleOverlayClick(event, 'logStepsModal')">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <h3>Log Steps</h3>
+    <div class="input-group">
+      <label>Steps</label>
+      <input type="number" id="logCount" placeholder="e.g. 8500" inputmode="numeric" min="0" />
+    </div>
+    <div class="input-group" style="margin-bottom:20px">
+      <label>Date</label>
+      <input type="date" id="logDate" />
+    </div>
+    <button class="btn btn-primary" id="logStepsSubmit" onclick="submitLogSteps()">Save Steps</button>
+    <button class="btn btn-outline" style="margin-top:10px" onclick="closeModal('logStepsModal')">Cancel</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script type="module">
+// ── SUPABASE ────────────────────────────────────────────
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+
+const supabase = createClient(
+  'https://hibjzhxaeretqooipelv.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhpYmp6aHhhZXJldHFvb2lwZWx2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4NzE4MDgsImV4cCI6MjA5NDQ0NzgwOH0.xj2CkqwbbwdzWgS-xPtqDSssiZXPbc8J1s8PR5yWKNM'
+)
+
 const state = {
-  user: { name: "John Doe", id: "me" },
-  joinedTeam: null,
+  session: null,
+  profile: null,
+  logs: [],
+  teams: [],
+  championship: null,
+  champTeams: [],
+  champSolo: [],
   joiningTeamId: null,
-  teams: [
-    { id: "t1", name: "The Rockets", emoji: "🚀", members: 8, password: "rockets123" },
-    { id: "t2", name: "Iron Walkers", emoji: "⚡", members: 12, password: "iron2026" },
-    { id: "t3", name: "Sunrise Squad", emoji: "🌅", members: 6, password: "sunrise" },
-    { id: "t4", name: "Night Owls", emoji: "🦉", members: 9, password: "owls" },
-  ],
-  logs: [
-    { date: "2026-05-11", steps: 9241 },
-    { date: "2026-05-10", steps: 11823 },
-    { date: "2026-05-09", steps: 7540 },
-    { date: "2026-05-08", steps: 13002 },
-    { date: "2026-05-07", steps: 6318 },
-    { date: "2026-05-06", steps: 10450 },
-    { date: "2026-05-05", steps: 8877 },
-  ],
-  championship: {
-    name: "Spring Championship",
-    goal: 2000000,
-    teams: [
-      { id: "ct1", name: "The Rockets", emoji: "🚀", steps: 187432 },
-      { id: "ct2", name: "Iron Walkers", emoji: "⚡", steps: 243810 },
-      { id: "ct3", name: "Sunrise Squad", emoji: "🌅", steps: 156290 },
-      { id: "ct4", name: "Night Owls", emoji: "🦉", steps: 201543 },
-      { id: "ct5", name: "Storm Chasers", emoji: "🌩️", steps: 178900 },
-      { id: "ct6", name: "Peak Climbers", emoji: "🏔️", steps: 134670 },
-    ],
-    solo: [
-      { id: "s1", name: "Maria G.", initials: "MG", color: "#ff6b35", team: "Iron Walkers", steps: 58310 },
-      { id: "s2", name: "Kwame A.", initials: "KA", color: "#47b8ff", team: "Iron Walkers", steps: 52100 },
-      { id: "s3", name: "John Doe", initials: "JD", color: "#e8ff47", team: "The Rockets", steps: 47820, isMe: true },
-      { id: "s4", name: "Priya S.", initials: "PS", color: "#c084fc", team: "Night Owls", steps: 44230 },
-      { id: "s5", name: "Luca M.", initials: "LM", color: "#fb923c", team: "Sunrise Squad", steps: 41590 },
-      { id: "s6", name: "Anya K.", initials: "AK", color: "#34d399", team: "Storm Chasers", steps: 39800 },
-      { id: "s7", name: "Ben T.", initials: "BT", color: "#f472b6", team: "Peak Climbers", steps: 37200 },
-      { id: "s8", name: "Zoe L.", initials: "ZL", color: "#60a5fa", team: "Night Owls", steps: 35610 },
-    ]
-  }
-};
+  champHistory: [],
+  editingDate: null,
+  editingStepId: null,
+  adminStats: null,
+}
 
-// ── NAVIGATION ─────────────────────────────────────────
+// ── UTILS ───────────────────────────────────────────────
+function fmt(n) {
+  if (n >= 1000) return (n / 1000).toFixed(1) + 'k'
+  return n.toString()
+}
+function fmtFull(n) { return n.toLocaleString() }
+
+let toastTimer
+function showToast(msg, type) {
+  const el = document.getElementById('toast')
+  el.textContent = msg
+  el.className = 'toast ' + (type === 'error' ? 'error' : type === 'success' ? 'success' : '')
+  el.classList.add('show')
+  clearTimeout(toastTimer)
+  toastTimer = setTimeout(() => el.classList.remove('show'), 3000)
+}
+
+// ── NAVIGATION ──────────────────────────────────────────
 function switchPage(name, btn) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('page-' + name).classList.add('active');
-  btn.classList.add('active');
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'))
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'))
+  document.getElementById('page-' + name).classList.add('active')
+  btn.classList.add('active')
 }
+window.switchPage = switchPage
 
-// ── MODALS ─────────────────────────────────────────────
-function openModal(id) {
-  document.getElementById(id).classList.add('open');
-}
-function closeModal(id) {
-  document.getElementById(id).classList.remove('open');
-}
-function handleOverlayClick(e, id) {
-  if (e.target === e.currentTarget) closeModal(id);
-}
+// ── MODALS ──────────────────────────────────────────────
+function openModal(id) { document.getElementById(id).classList.add('open') }
+function closeModal(id) { document.getElementById(id).classList.remove('open') }
+function handleOverlayClick(e, id) { if (e.target === e.currentTarget) closeModal(id) }
+window.openModal = openModal
+window.closeModal = closeModal
+window.handleOverlayClick = handleOverlayClick
 
 // ── LEADERBOARD TABS ────────────────────────────────────
 function switchLbTab(tab, el) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  el.classList.add('active');
-  document.getElementById('lb-teams').style.display = tab === 'teams' ? '' : 'none';
-  document.getElementById('lb-solo').style.display = tab === 'solo' ? '' : 'none';
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'))
+  el.classList.add('active')
+  document.getElementById('lb-teams').style.display = tab === 'teams' ? '' : 'none'
+  document.getElementById('lb-solo').style.display = tab === 'solo' ? '' : 'none'
+}
+window.switchLbTab = switchLbTab
+
+// ── SIGN OUT ────────────────────────────────────────────
+async function signOut() {
+  await supabase.auth.signOut()
+  window.location.href = 'auth.html'
+}
+window.signOut = signOut
+
+// ── LOG STEPS ───────────────────────────────────────────
+function openLogSteps() {
+  document.getElementById('logDate').value = new Date().toISOString().split('T')[0]
+  document.getElementById('logCount').value = ''
+  openModal('logStepsModal')
+}
+window.openLogSteps = openLogSteps
+
+async function submitLogSteps() {
+  const count = parseInt(document.getElementById('logCount').value)
+  const date = document.getElementById('logDate').value
+  if (!count || count <= 0 || !date) return
+
+  const btn = document.getElementById('logStepsSubmit')
+  btn.disabled = true
+
+  const { data: existing } = await supabase
+    .from('steps').select('id')
+    .eq('user_id', state.session.user.id).eq('date', date).maybeSingle()
+
+  let error
+  if (existing) {
+    ;({ error } = await supabase.from('steps').update({ count, source: 'manual' }).eq('id', existing.id))
+  } else {
+    ;({ error } = await supabase.from('steps').insert({ user_id: state.session.user.id, date, count, source: 'manual' }))
+  }
+
+  btn.disabled = false
+  if (error) { showToast('Failed to save steps', 'error'); return }
+  closeModal('logStepsModal')
+  await Promise.all([loadProfile(), loadChampionship()])
+}
+window.submitLogSteps = submitLogSteps
+
+// ── TEAM ACTIONS ────────────────────────────────────────
+function handleTeamClick(id) {
+  if (state.profile?.team_id === id) return
+  state.joiningTeamId = id
+  const team = state.teams.find(t => t.id === id)
+  document.getElementById('joinTeamTitle').textContent = `Join ${team.name}`
+  document.getElementById('joinTeamPass').value = ''
+  openModal('joinTeamModal')
+}
+window.handleTeamClick = handleTeamClick
+
+async function joinTeam() {
+  const pass = document.getElementById('joinTeamPass').value.trim()
+  const team = state.teams.find(t => t.id === state.joiningTeamId)
+  if (!team) return
+  if (pass !== team.password) {
+    document.getElementById('joinTeamPass').style.borderColor = 'var(--danger)'
+    setTimeout(() => document.getElementById('joinTeamPass').style.borderColor = '', 1200)
+    return
+  }
+  const { error } = await supabase.from('users').update({ team_id: team.id }).eq('id', state.session.user.id)
+  if (error) { showToast('Failed to join team', 'error'); return }
+  state.profile.team_id = team.id
+  closeModal('joinTeamModal')
+  renderTeams()
+}
+window.joinTeam = joinTeam
+
+async function createTeam() {
+  const name = document.getElementById('newTeamName').value.trim()
+  const pass = document.getElementById('newTeamPass').value.trim()
+  if (!name || !pass) return
+
+  const emojis = ['🔥','💫','⚡','🎯','🦁','🌊','🏹','🛸']
+  const emoji = emojis[Math.floor(Math.random() * emojis.length)]
+
+  const { data: newTeam, error } = await supabase
+    .from('teams').insert({ name, password: pass, emoji }).select().single()
+  if (error) {
+    showToast(error.message.includes('unique') ? 'Team name already taken' : 'Failed to create team', 'error')
+    return
+  }
+
+  const { error: ue } = await supabase.from('users').update({ team_id: newTeam.id }).eq('id', state.session.user.id)
+  if (ue) { showToast('Team created but could not join', 'error'); return }
+
+  state.profile.team_id = newTeam.id
+  state.teams.unshift({ ...newTeam, members: 1 })
+  document.getElementById('newTeamName').value = ''
+  document.getElementById('newTeamPass').value = ''
+  closeModal('createTeamModal')
+  renderTeams()
+}
+window.createTeam = createTeam
+
+// ── LEAVE TEAM ──────────────────────────────────────────
+async function leaveTeam() {
+  if (!confirm('Leave your team? You can rejoin anytime with the password.')) return
+  const { error } = await supabase.from('users').update({ team_id: null }).eq('id', state.session.user.id)
+  if (error) { showToast('Failed to leave team', 'error'); return }
+  state.profile.team_id = null
+  renderTeams()
+}
+window.leaveTeam = leaveTeam
+
+// ── EDIT LOG ────────────────────────────────────────────
+function openEditLog(date, steps, id) {
+  state.editingDate = date
+  state.editingStepId = id
+  const d = new Date(date + 'T00:00:00')
+  document.getElementById('editLogTitle').textContent =
+    d.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })
+  document.getElementById('editLogCount').value = steps || ''
+  const delBtn = document.querySelector('#editLogModal .btn-outline[onclick="deleteLogEntry()"]')
+  if (delBtn) delBtn.style.display = id ? '' : 'none'
+  openModal('editLogModal')
+}
+window.openEditLog = openEditLog
+
+async function submitEditLog() {
+  const count = parseInt(document.getElementById('editLogCount').value)
+  if (!count || count <= 0) return
+  const btn = document.getElementById('editLogSubmit')
+  btn.disabled = true
+
+  let error
+  if (state.editingStepId) {
+    ;({ error } = await supabase.from('steps').update({ count, source: 'manual' }).eq('id', state.editingStepId))
+  } else {
+    ;({ error } = await supabase.from('steps').insert({ user_id: state.session.user.id, date: state.editingDate, count, source: 'manual' }))
+  }
+
+  btn.disabled = false
+  if (error) { showToast('Failed to save', 'error'); return }
+  closeModal('editLogModal')
+  await Promise.all([loadProfile(), loadChampionship()])
+}
+window.submitEditLog = submitEditLog
+
+async function deleteLogEntry() {
+  if (!state.editingStepId) return
+  if (!confirm('Delete this entry?')) return
+  const { error } = await supabase.from('steps').delete().eq('id', state.editingStepId)
+  if (error) { showToast('Failed to delete', 'error'); return }
+  closeModal('editLogModal')
+  await Promise.all([loadProfile(), loadChampionship()])
+}
+window.deleteLogEntry = deleteLogEntry
+
+// ── CHAMPIONSHIP HISTORY ─────────────────────────────────
+async function loadChampionshipHistory() {
+  const { data: results } = await supabase
+    .from('championship_results')
+    .select('*, championships(*)')
+    .order('finished_at', { ascending: false })
+
+  state.champHistory = (results || []).filter(r => {
+    return r.snapshot?.solo?.some(s => s.id === state.session.user.id)
+  })
+  renderChampionshipHistory()
 }
 
-// ── FORMAT ─────────────────────────────────────────────
-function fmt(n) {
-  if (n >= 1000) return (n/1000).toFixed(1) + 'k';
-  return n.toString();
-}
-function fmtFull(n) {
-  return n.toLocaleString();
+function renderChampionshipHistory() {
+  const section = document.getElementById('champHistorySection')
+  const list = document.getElementById('champHistoryList')
+  if (!state.champHistory.length) { section.style.display = 'none'; return }
+  section.style.display = ''
+
+  list.innerHTML = state.champHistory.map(r => {
+    const ch = r.championships
+    const solo = r.snapshot.solo || []
+    const teams = r.snapshot.teams || []
+    const myEntry = solo.find(s => s.id === state.session.user.id)
+    const myRank = solo.indexOf(myEntry) + 1
+    const myTeamEntry = myEntry ? teams.find(t => t.name === myEntry.team) : null
+    const myTeamRank = myTeamEntry ? teams.indexOf(myTeamEntry) + 1 : null
+    const finished = r.finished_at ? new Date(r.finished_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : ''
+
+    return `<div class="hist-card">
+      <div class="hist-name">${ch?.name || 'Championship'}</div>
+      <div class="hist-date">Ended ${finished}</div>
+      <div class="hist-stats">
+        <div class="hist-stat">
+          <div class="val">#${myRank}</div>
+          <div class="lbl">Your Rank · ${fmtFull(myEntry?.steps || 0)} steps</div>
+        </div>
+        ${myTeamEntry ? `<div class="hist-stat">
+          <div class="val">#${myTeamRank}</div>
+          <div class="lbl">${myTeamEntry.name} · ${fmtFull(myTeamEntry.steps)} steps</div>
+        </div>` : '<div class="hist-stat"><div class="val">—</div><div class="lbl">No team</div></div>'}
+      </div>
+    </div>`
+  }).join('')
 }
 
-// ── RENDER PROFILE ─────────────────────────────────────
+// ── ADMIN ────────────────────────────────────────────────
+async function loadAdmin() {
+  const [
+    { count: totalUsers },
+    { count: totalTeams },
+    { data: stepSum },
+    { data: recentActivity },
+    { data: activeUsers },
+  ] = await Promise.all([
+    supabase.from('users').select('*', { count: 'exact', head: true }),
+    supabase.from('teams').select('*', { count: 'exact', head: true }),
+    supabase.from('steps').select('count'),
+    supabase.from('steps').select('count, date, users(username, teams(name))').order('created_at', { ascending: false }).limit(10),
+    supabase.from('steps').select('user_id').gte('date', (() => { const d = new Date(); d.setDate(d.getDate() - 6); return d.toISOString().split('T')[0] })()),
+  ])
+
+  const allSteps = stepSum || []
+  const totalSteps = allSteps.reduce((a, b) => a + (b.count || 0), 0)
+  const activeCount = new Set((activeUsers || []).map(r => r.user_id)).size
+
+  state.adminStats = { totalUsers, totalTeams, totalSteps, activeCount }
+
+  const [{ data: memberships }, { data: champStepRows }] = await Promise.all([
+    supabase.from('users').select('team_id').not('team_id', 'is', null),
+    state.championship
+      ? supabase.from('steps').select('count, users(team_id)').gte('date', state.championship.created_at.split('T')[0])
+      : Promise.resolve({ data: [] }),
+  ])
+
+  const memberCount = {}
+  for (const m of (memberships || [])) memberCount[m.team_id] = (memberCount[m.team_id] || 0) + 1
+
+  const champStepsPerTeam = {}
+  for (const s of (champStepRows || [])) {
+    const tid = s.users?.team_id
+    if (tid) champStepsPerTeam[tid] = (champStepsPerTeam[tid] || 0) + s.count
+  }
+
+  const adminTeams = state.teams.map(t => ({
+    ...t,
+    members: memberCount[t.id] || 0,
+    champSteps: champStepsPerTeam[t.id] || 0,
+  })).sort((a, b) => b.champSteps - a.champSteps)
+
+  renderAdmin(adminTeams, recentActivity || [])
+}
+
+function renderAdmin(adminTeams, recentActivity) {
+  const s = state.adminStats
+  document.getElementById('adminStatGrid').innerHTML = `
+    <div class="admin-stat-box"><div class="val">${s.totalUsers ?? '—'}</div><div class="lbl">Total Users</div></div>
+    <div class="admin-stat-box"><div class="val">${s.activeCount ?? '—'}</div><div class="lbl">Active (7d)</div></div>
+    <div class="admin-stat-box"><div class="val">${fmt(s.totalSteps ?? 0)}</div><div class="lbl">Steps All-Time</div></div>
+    <div class="admin-stat-box"><div class="val">${s.totalTeams ?? '—'}</div><div class="lbl">Teams</div></div>`
+
+  const champ = state.championship
+  const champSection = document.getElementById('adminChampSection')
+  if (champ) {
+    const total = state.champTeams.reduce((a, b) => a + b.steps, 0)
+    const pct = Math.min(100, Math.round((total / champ.goal) * 100))
+    champSection.innerHTML = `
+      <div class="champ-mgmt-card">
+        <h4>${champ.name}</h4>
+        <p>${fmtFull(total)} / ${fmtFull(champ.goal)} steps · ${pct}% complete</p>
+        <button class="btn btn-danger" onclick="endChampionship()">End Championship & Save Results</button>
+      </div>`
+  } else {
+    champSection.innerHTML = `
+      <div class="champ-mgmt-card">
+        <h4>No Active Championship</h4>
+        <p>Create a new championship to get started.</p>
+        <div class="input-group"><label>Name</label><input type="text" id="newChampName" placeholder="e.g. Summer Championship" /></div>
+        <div class="input-group" style="margin-bottom:14px"><label>Step Goal</label><input type="number" id="newChampGoal" placeholder="e.g. 2000000" inputmode="numeric" /></div>
+        <button class="btn btn-primary" onclick="createChampionship()">Start Championship</button>
+      </div>`
+  }
+
+  document.getElementById('adminTeamsBody').innerHTML = adminTeams.length
+    ? adminTeams.map(t => `<tr>
+        <td><span style="margin-right:8px">${t.emoji}</span>${t.name}</td>
+        <td style="color:var(--muted)">${t.members}</td>
+        <td>${fmtFull(t.champSteps)}</td>
+      </tr>`).join('')
+    : '<tr><td colspan="3" style="color:var(--muted); padding:16px 0">No teams yet</td></tr>'
+
+  document.getElementById('adminActivityList').innerHTML = recentActivity.length
+    ? recentActivity.map(r => `
+      <div class="activity-row">
+        <div class="activity-name">${r.users?.username || '—'}</div>
+        <div class="activity-meta">${r.date} · ${r.users?.teams?.name || 'No team'}</div>
+        <div class="activity-steps">${fmtFull(r.count)}</div>
+      </div>`).join('')
+    : '<div class="empty">No activity yet</div>'
+}
+window.loadAdmin = loadAdmin
+
+async function createChampionship() {
+  const name = document.getElementById('newChampName')?.value.trim()
+  const goal = parseInt(document.getElementById('newChampGoal')?.value)
+  if (!name || !goal || goal <= 0) { showToast('Enter a name and goal', 'error'); return }
+
+  const { error } = await supabase.from('championships').insert({ name, goal, status: 'active' })
+  if (error) { showToast('Failed to create championship', 'error'); return }
+  showToast('Championship started!', 'success')
+  await Promise.all([loadChampionship(), loadAdmin()])
+}
+window.createChampionship = createChampionship
+
+async function endChampionship() {
+  const champ = state.championship
+  if (!champ) return
+  if (!confirm(`End "${champ.name}" and save final results?`)) return
+
+  await loadChampionship()
+  const snapshot = { teams: state.champTeams, solo: state.champSolo }
+  const now = new Date().toISOString()
+
+  const [{ error: e1 }, { error: e2 }] = await Promise.all([
+    supabase.from('championship_results').insert({ championship_id: champ.id, snapshot, finished_at: now }),
+    supabase.from('championships').update({ status: 'finished', finished_at: now }).eq('id', champ.id),
+  ])
+
+  if (e1 || e2) { showToast('Failed to end championship', 'error'); return }
+  showToast('Championship ended and results saved', 'success')
+  await Promise.all([loadChampionship(), loadAdmin(), loadChampionshipHistory()])
+}
+window.endChampionship = endChampionship
+
+// ── RENDER PROFILE ──────────────────────────────────────
 function renderProfile() {
-  const name = state.user.name;
-  const initials = name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
-  document.getElementById('avatarEl').textContent = initials;
-  document.getElementById('profileName').textContent = name;
+  const profile = state.profile
+  const name = profile?.username || 'User'
+  document.getElementById('avatarEl').textContent = name.slice(0, 2).toUpperCase()
+  document.getElementById('profileName').textContent = name
+  if (profile?.created_at) {
+    document.getElementById('memberSince').textContent = 'Member since ' +
+      new Date(profile.created_at).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
+  }
 
-  const today = state.logs[0]?.steps ?? 0;
-  const week = state.logs.reduce((a,b) => a + b.steps, 0);
-  document.getElementById('statToday').textContent = fmt(today);
-  document.getElementById('statWeek').textContent = fmt(week);
+  const today = new Date().toISOString().split('T')[0]
+  const byDate = {}
+  for (const log of state.logs) byDate[log.date] = (byDate[log.date] || 0) + log.count
 
-  const max = Math.max(...state.logs.map(l=>l.steps));
-  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-  const list = document.getElementById('logList');
-  list.innerHTML = state.logs.map(l => {
-    const d = new Date(l.date + 'T00:00:00');
-    const dayName = days[d.getDay()];
-    const dateStr = d.toLocaleDateString('en-US', { month:'short', day:'numeric' });
-    const pct = Math.round((l.steps / max) * 100);
-    return `
-      <div class="log-entry">
-        <div>
-          <div class="log-day">${dayName}</div>
-          <div class="log-date">${dateStr}</div>
-        </div>
-        <div class="log-steps">
-          <div class="num">${fmtFull(l.steps)}</div>
-          <div class="unit">steps</div>
-          <div class="bar-wrap"><div class="bar-fill" style="width:${pct}%"></div></div>
-        </div>
-      </div>`;
-  }).join('');
+  document.getElementById('statToday').textContent = fmt(byDate[today] || 0)
+  document.getElementById('statWeek').textContent = fmt(Object.values(byDate).reduce((a, b) => a + b, 0))
+
+  let streak = 0
+  for (let i = 0; i < 365; i++) {
+    const d = new Date(); d.setDate(d.getDate() - i)
+    if (byDate[d.toISOString().split('T')[0]]) streak++
+    else break
+  }
+  document.getElementById('statStreak').textContent = streak
+
+  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+  const entries = Array.from({ length: 30 }, (_, i) => {
+    const d = new Date(); d.setDate(d.getDate() - i)
+    const ds = d.toISOString().split('T')[0]
+    const match = state.logs.find(l => l.date === ds)
+    return { date: ds, steps: byDate[ds] || 0, id: match?.id || null }
+  })
+  const max = Math.max(...entries.map(e => e.steps), 1)
+  document.getElementById('logList').innerHTML = entries.map(e => {
+    const d = new Date(e.date + 'T00:00:00')
+    const pct = Math.round((e.steps / max) * 100)
+    return `<div class="log-entry" onclick="openEditLog('${e.date}', ${e.steps}, ${e.id ? `'${e.id}'` : null})">
+      <div>
+        <div class="log-day">${days[d.getDay()]}</div>
+        <div class="log-date">${d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</div>
+      </div>
+      <div class="log-steps">
+        <div class="num">${fmtFull(e.steps)}</div>
+        <div class="unit">steps</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:${pct}%"></div></div>
+      </div>
+    </div>`
+  }).join('')
 }
 
 // ── RENDER TEAMS ────────────────────────────────────────
 function renderTeams() {
-  const list = document.getElementById('teamsList');
+  const joinedId = state.profile?.team_id
+  const myTeam = state.teams.find(t => t.id === joinedId)
+  const yourTeamSection = document.getElementById('yourTeamSection')
+  const yourTeamCard = document.getElementById('yourTeamCard')
+
+  if (myTeam) {
+    yourTeamSection.style.display = ''
+    yourTeamCard.innerHTML = `
+      <div class="your-team-card">
+        <div class="team-dot" style="background:var(--surface2); width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0">${myTeam.emoji}</div>
+        <div class="team-info">
+          <div class="team-name">${myTeam.name}</div>
+          <div class="team-meta">${myTeam.members} member${myTeam.members !== 1 ? 's' : ''}</div>
+        </div>
+        <button class="leave-btn" onclick="leaveTeam()">Leave</button>
+      </div>`
+  } else {
+    yourTeamSection.style.display = 'none'
+  }
+
+  const list = document.getElementById('teamsList')
+  if (!state.teams.length) {
+    list.innerHTML = '<div class="empty">No teams yet. Create the first one!</div>'
+    return
+  }
   list.innerHTML = state.teams.map(t => `
-    <div class="team-card ${state.joinedTeam === t.id ? 'joined' : ''}" onclick="handleTeamClick('${t.id}')">
+    <div class="team-card ${joinedId === t.id ? 'joined' : ''}" onclick="handleTeamClick('${t.id}')">
       <div class="team-dot" style="background:var(--surface2)">${t.emoji}</div>
       <div class="team-info">
         <div class="team-name">${t.name}</div>
-        <div class="team-meta">${t.members} members</div>
+        <div class="team-meta">${t.members} member${t.members !== 1 ? 's' : ''}</div>
       </div>
-      ${state.joinedTeam === t.id ? '<span class="joined-badge">Joined</span>' : ''}
-    </div>`).join('');
+      ${joinedId === t.id ? '<span class="joined-badge">Joined</span>' : ''}
+    </div>`).join('')
 }
 
-function handleTeamClick(id) {
-  if (state.joinedTeam === id) return;
-  state.joiningTeamId = id;
-  const team = state.teams.find(t => t.id === id);
-  document.getElementById('joinTeamTitle').textContent = `Join ${team.name}`;
-  document.getElementById('joinTeamPass').value = '';
-  openModal('joinTeamModal');
-}
-
-function joinTeam() {
-  const pass = document.getElementById('joinTeamPass').value.trim();
-  const team = state.teams.find(t => t.id === state.joiningTeamId);
-  if (!team) return;
-  if (pass !== team.password) {
-    document.getElementById('joinTeamPass').style.borderColor = 'var(--danger)';
-    setTimeout(() => document.getElementById('joinTeamPass').style.borderColor = '', 1200);
-    return;
-  }
-  state.joinedTeam = team.id;
-  closeModal('joinTeamModal');
-  renderTeams();
-}
-
-function createTeam() {
-  const name = document.getElementById('newTeamName').value.trim();
-  const pass = document.getElementById('newTeamPass').value.trim();
-  if (!name || !pass) return;
-  const emojis = ['🔥','💫','⚡','🎯','🦁','🌊','🏹','🛸'];
-  const newTeam = {
-    id: 't' + Date.now(),
-    name,
-    emoji: emojis[Math.floor(Math.random() * emojis.length)],
-    members: 1,
-    password: pass
-  };
-  state.teams.unshift(newTeam);
-  state.joinedTeam = newTeam.id;
-  document.getElementById('newTeamName').value = '';
-  document.getElementById('newTeamPass').value = '';
-  closeModal('createTeamModal');
-  renderTeams();
-}
-
-// ── RENDER CHAMPIONSHIP ────────────────────────────────
+// ── RENDER CHAMPIONSHIP ─────────────────────────────────
 function renderChampionship() {
-  const ch = state.championship;
-  const total = ch.teams.reduce((a,b) => a + b.steps, 0);
-  const pct = Math.min(100, Math.round((total / ch.goal) * 100));
-  const remain = Math.max(0, ch.goal - total);
+  if (!state.championship) {
+    document.getElementById('champPct').textContent = '—'
+    document.getElementById('champTotal').textContent = '0'
+    document.getElementById('champRemain').textContent = 'No active championship'
+    document.getElementById('lb-teams').innerHTML = '<div class="empty">No active championship</div>'
+    document.getElementById('lb-solo').innerHTML = '<div class="empty">No active championship</div>'
+    return
+  }
 
-  document.getElementById('champPct').textContent = pct + '%';
-  document.getElementById('champTotal').textContent = fmtFull(total);
-  document.getElementById('champRemain').textContent = fmtFull(remain) + ' remaining';
-  setTimeout(() => {
-    document.getElementById('champBar').style.width = pct + '%';
-  }, 100);
+  const { championship: ch, champTeams, champSolo } = state
+  const total = champTeams.reduce((a, b) => a + b.steps, 0)
+  const pct = Math.min(100, Math.round((total / ch.goal) * 100))
+  const remain = Math.max(0, ch.goal - total)
 
-  const rankClass = i => i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : '';
-  const sorted_teams = [...ch.teams].sort((a,b) => b.steps - a.steps);
-  document.getElementById('lb-teams').innerHTML = sorted_teams.map((t,i) => `
-    <div class="lb-entry">
-      <div class="lb-rank ${rankClass(i)}">${i+1}</div>
-      <div class="lb-team-icon" style="background:var(--surface2)">${t.emoji}</div>
-      <div class="lb-info">
-        <div class="lb-name">${t.name}</div>
-        <div class="lb-sub">${t.members || ''}</div>
-      </div>
-      <div class="lb-steps">
-        <div class="num">${fmtFull(t.steps)}</div>
-        <div class="unit">steps</div>
-      </div>
-    </div>`).join('');
+  document.getElementById('champTitle').textContent = ch.name
+  document.getElementById('champGoal').textContent = fmtFull(ch.goal) + ' steps'
+  document.getElementById('champPct').textContent = pct + '%'
+  document.getElementById('champTotal').textContent = fmtFull(total)
+  document.getElementById('champRemain').textContent = fmtFull(remain) + ' remaining'
+  setTimeout(() => { document.getElementById('champBar').style.width = pct + '%' }, 100)
 
-  const sorted_solo = [...ch.solo].sort((a,b) => b.steps - a.steps);
-  document.getElementById('lb-solo').innerHTML = sorted_solo.map((s,i) => `
-    <div class="lb-entry ${s.isMe ? 'me-highlight' : ''}">
-      <div class="lb-rank ${rankClass(i)}">${i+1}</div>
-      <div class="lb-avatar" style="background:${s.color}22;color:${s.color}">${s.initials}</div>
-      <div class="lb-info">
-        <div class="lb-name">${s.name}${s.isMe ? ' <span style="color:var(--accent);font-size:11px">YOU</span>' : ''}</div>
-        <div class="lb-sub">${s.team}</div>
-      </div>
-      <div class="lb-steps">
-        <div class="num">${fmtFull(s.steps)}</div>
-        <div class="unit">steps</div>
-      </div>
-    </div>`).join('');
+  const rank = i => i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : ''
+  const colors = ['#ff6b35','#47b8ff','#e8ff47','#c084fc','#fb923c','#34d399','#f472b6','#60a5fa']
+
+  document.getElementById('lb-teams').innerHTML = champTeams.length
+    ? champTeams.map((t, i) => `
+      <div class="lb-entry">
+        <div class="lb-rank ${rank(i)}">${i + 1}</div>
+        <div class="lb-team-icon" style="background:var(--surface2)">${t.emoji}</div>
+        <div class="lb-info"><div class="lb-name">${t.name}</div><div class="lb-sub"></div></div>
+        <div class="lb-steps"><div class="num">${fmtFull(t.steps)}</div><div class="unit">steps</div></div>
+      </div>`).join('')
+    : '<div class="empty">No steps logged yet</div>'
+
+  document.getElementById('lb-solo').innerHTML = champSolo.length
+    ? champSolo.map((s, i) => {
+        const color = colors[i % colors.length]
+        const isMe = s.id === state.session.user.id
+        return `<div class="lb-entry ${isMe ? 'me-highlight' : ''}">
+          <div class="lb-rank ${rank(i)}">${i + 1}</div>
+          <div class="lb-avatar" style="background:${color}22;color:${color}">${s.initials}</div>
+          <div class="lb-info">
+            <div class="lb-name">${s.name}${isMe ? ' <span style="color:var(--accent);font-size:11px">YOU</span>' : ''}</div>
+            <div class="lb-sub">${s.team}</div>
+          </div>
+          <div class="lb-steps"><div class="num">${fmtFull(s.steps)}</div><div class="unit">steps</div></div>
+        </div>`
+      }).join('')
+    : '<div class="empty">No steps logged yet</div>'
+}
+
+// ── DATA LOADERS ────────────────────────────────────────
+async function loadProfile() {
+  const cutoff = new Date(); cutoff.setDate(cutoff.getDate() - 29)
+  const since = cutoff.toISOString().split('T')[0]
+
+  const [{ data: profile }, { data: logs }] = await Promise.all([
+    supabase.from('users').select('*, teams(*)').eq('id', state.session.user.id).single(),
+    supabase.from('steps').select('*').eq('user_id', state.session.user.id)
+      .gte('date', since).order('date', { ascending: false })
+  ])
+  state.profile = profile
+  state.logs = logs || []
+  renderProfile()
+  loadChampionshipHistory()
+}
+
+async function loadTeams() {
+  const [{ data: teams }, { data: memberships }] = await Promise.all([
+    supabase.from('teams').select('id, name, emoji, password').order('name'),
+    supabase.from('users').select('team_id').not('team_id', 'is', null)
+  ])
+  const memberCount = {}
+  for (const m of (memberships || [])) memberCount[m.team_id] = (memberCount[m.team_id] || 0) + 1
+  state.teams = (teams || []).map(t => ({ ...t, members: memberCount[t.id] || 0 }))
+  renderTeams()
+}
+
+async function loadChampionship() {
+  const { data: champ } = await supabase
+    .from('championships').select('*').eq('status', 'active').maybeSingle()
+  state.championship = champ
+
+  if (champ) {
+    const { data: allSteps } = await supabase
+      .from('steps')
+      .select('count, users(id, username, teams(id, name, emoji))')
+      .gte('date', champ.created_at.split('T')[0])
+
+    const teamMap = {}, userMap = {}
+    for (const step of (allSteps || [])) {
+      const user = step.users; if (!user) continue
+      const team = user.teams
+      if (!userMap[user.id]) {
+        userMap[user.id] = { id: user.id, name: user.username,
+          initials: user.username.slice(0, 2).toUpperCase(), team: team?.name || '', steps: 0 }
+      }
+      userMap[user.id].steps += step.count
+      if (team) {
+        if (!teamMap[team.id]) teamMap[team.id] = { id: team.id, name: team.name, emoji: team.emoji, steps: 0 }
+        teamMap[team.id].steps += step.count
+      }
+    }
+    state.champTeams = Object.values(teamMap).sort((a, b) => b.steps - a.steps)
+    state.champSolo = Object.values(userMap).sort((a, b) => b.steps - a.steps)
+  } else {
+    state.champTeams = []; state.champSolo = []
+  }
+  renderChampionship()
 }
 
 // ── INIT ────────────────────────────────────────────────
-renderProfile();
-renderTeams();
-renderChampionship();
+async function init() {
+  const { data: { session } } = await supabase.auth.getSession()
+  if (!session) { window.location.href = 'auth.html'; return }
+  state.session = session
+  await Promise.all([loadProfile(), loadTeams(), loadChampionship()])
+  if (state.profile?.is_admin) {
+    document.getElementById('nav-admin').style.display = ''
+  }
+}
+
+// Lazy-load admin data when tab is first opened
+const origSwitchPage = window.switchPage
+window.switchPage = function(name, btn) {
+  origSwitchPage(name, btn)
+  if (name === 'admin' && state.profile?.is_admin && !state.adminStats) {
+    loadAdmin()
+  }
+}
+
+init()
 </script>
 </body>
 </html>
